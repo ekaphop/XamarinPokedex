@@ -1,6 +1,8 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XamarinPokedex.Views;
+using XamarinPokedex.Views.TestPage;
 
 namespace XamarinPokedex
 {
@@ -9,8 +11,7 @@ namespace XamarinPokedex
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new PokemonMainPage());
         }
 
         protected override void OnStart()

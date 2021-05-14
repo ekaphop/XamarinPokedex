@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:templates="clr-namespace:XamarinPokedex.Views.Templates"
+    x:Class="XamarinPokedex.Views.TestPage.ArtPlantMallView">
+    <ContentPage.Resources>
+        <Style x:Key="TitleStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="Margin" Value="18,24,0,0" />
+        </Style>
+
+        <DataTemplate x:Key="PlantItemTemplate">
+            <templates:PlantItemTemplate />
+        </DataTemplate>
+
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label
+                Grid.Row="0"
+                Text="Pokemon lists"/>
+            <CollectionView
+                Grid.Row="1"
+                ItemsSource="{Binding Plants}"
+                ItemTemplate="{StaticResource PlantItemTemplate}"
+                Margin="10,0">
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        Orientation="Vertical"
+                        Span="2"/>
+                </CollectionView.ItemsLayout>
+                
+            </CollectionView>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
