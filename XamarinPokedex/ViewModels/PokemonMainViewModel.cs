@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Xamarin.Forms;
 using XamarinPokedex.Models;
 using XamarinPokedex.Services;
@@ -26,6 +27,8 @@ namespace XamarinPokedex.ViewModels
             set { _navigation = value; }
         }
 
+        public ICommand MyCommand { get; set; }
+
         private ObservableCollection<DoubleGridItem> _pokemonData;
         public ObservableCollection<DoubleGridItem> PokemonData
         {
@@ -33,15 +36,17 @@ namespace XamarinPokedex.ViewModels
             set
             {
                 _pokemonData = value;
-                OnPropertyChanged(nameof(_pokemonData));
+                OnPropertyChanged(nameof(PokemonData));
             }
         }
 
         public Command SelectOddItemCommand { get; }
         public Command SelectEventItemCommand { get; }
 
-        public PokemonMainViewModel()
+        public PokemonMainViewModel(INavigation navigation)
         {
+            _navigation = navigation;
+
             _pokemonMainEntity = new PokemonMainEntity();
             PokemonData = new ObservableCollection<DoubleGridItem>();
             SelectOddItemCommand = new Command(SelectOddItemMethod);
@@ -53,13 +58,20 @@ namespace XamarinPokedex.ViewModels
         private void SelectOddItemMethod(object obj)
         {
             var content = obj as DoubleGridItem;
-            Navigation.PushAsync(new PokemonProfilePage(content.Name));
+            GoToProfilePage(content.Id);
         }
 
         private void SelectEventItemMethod(object obj)
         {
             var content = obj as DoubleGridItem;
-            Navigation.PushAsync(new PokemonProfilePage(content.Name2));
+            GoToProfilePage(content.Id2);
+        }
+
+        private async void GoToProfilePage(int id)
+        {
+            var pokemonProfile = await PokeApiService.Instance.GetPokemonProfile(id);
+            var pokemonSpecies = await PokeApiService.Instance.GetPokemonSpecies(id);
+            await Navigation.PushAsync(new PokemonProfilePage(pokemonProfile, pokemonSpecies));
         }
 
         private async void LoadData()

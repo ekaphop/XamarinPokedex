@@ -3,5 +3,224 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="XamarinPokedex.Views.PokemonProfilePage">
-    
+
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200" />
+                    <RowDefinition Height="150" />
+                    <RowDefinition Height="1" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="11" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="11" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="200" />
+                    <RowDefinition Height="11" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image
+                    Grid.Row="0"
+                    Aspect="AspectFit"
+                    WidthRequest="150"
+                    HeightRequest="200"
+                    Source="{Binding PokemonProfile.Sprites.FrontDefault}"
+                    />
+                <StackLayout Grid.Row="1">
+                    <Grid Margin="20,0,20,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Text="ID"/>
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding PokemonProfile.Id}"/>
+
+                        <Label Grid.Row="1" Grid.Column="0" Text="Name"/>
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding PokemonProfile.Name}"/>
+
+                        <Label Grid.Row="2" Grid.Column="0" Text="Height"/>
+                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding PokemonProfile.Height}"/>
+
+                        <Label Grid.Row="3" Grid.Column="0" Text="Weight"/>
+                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding PokemonProfile.Weight}"/>
+
+                        <Label Grid.Row="4" Grid.Column="0" Text="Base Experience"/>
+                        <Label Grid.Row="4" Grid.Column="1" Text="{Binding PokemonProfile.BaseExperience}"/>
+                    </Grid>
+                </StackLayout>
+
+                <BoxView
+                    Grid.Row="2"
+                    HeightRequest="1"
+                    BackgroundColor="Red" />
+
+                <Label
+                    Grid.Row="3"
+                    Margin="20,10,20,0"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    Text="Abilities" />
+
+                <ListView
+                    Grid.Row="4"
+                    ItemsSource="{Binding PokemonProfile.Abilities}"
+                    HeightRequest="{Binding AbilityListViewHeight}"
+                    HasUnevenRows="True"
+                    SeparatorVisibility="None"
+                    Margin="20,00,20,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout HeightRequest="30">
+                                    <Label Text="{Binding AbilityName.Name}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <BoxView
+                    Grid.Row="5"
+                    HeightRequest="1"
+                    Margin="0,10,0,0"
+                    BackgroundColor="Red"/>
+
+                <Label
+                    Grid.Row="6"
+                    Margin="20,10,20,0"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    Text="Moves" />
+
+                <ListView
+                    Grid.Row="7"
+                    ItemsSource="{Binding PokemonProfile.Moves}"
+                    HeightRequest="{Binding MovesListViewHeight}"
+                    HasUnevenRows="True"
+                    SeparatorVisibility="None"
+                    Margin="20,00,20,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout HeightRequest="30">
+                                    <Label Text="{Binding MoveDetail.Name}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <BoxView
+                    Grid.Row="8"
+                    HeightRequest="1"
+                    Margin="0,10,0,0"
+                    BackgroundColor="Red"/>
+
+                <Label
+                    Grid.Row="9"
+                    Margin="20,10,20,0"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    Text="Sprites" />
+
+                <ScrollView 
+                    Grid.Row="10"
+                    VerticalScrollBarVisibility="Never"
+                    HorizontalScrollBarVisibility="Never" >
+
+                    <RelativeLayout HeightRequest="200">
+                        <ListView 
+                            HasUnevenRows="True"
+                            SeparatorVisibility="None"
+                            ItemsSource="{Binding SpritesImage}"
+                            Rotation="270"
+                            RowHeight="200"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-100}"
+                            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=100}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=200}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell IsEnabled="False">
+                                        <ContentView Rotation="90">
+                                            <Image Margin="0,0,0,10"
+                                                   WidthRequest="200"
+                                                   HeightRequest="200"
+                                                   Aspect="AspectFit"
+                                                   Source="{Binding}" />
+                                        </ContentView>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        </RelativeLayout>
+                </ScrollView>
+
+                <BoxView
+                    Grid.Row="11"
+                    HeightRequest="1"
+                    Margin="0,10,0,0"
+                    BackgroundColor="Red"/>
+
+                <Label
+                    Grid.Row="12"
+                    Margin="20,10,20,0"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    Text="Species" />
+
+                <StackLayout Grid.Row="13">
+                    <Grid Margin="20,0,20,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Text="Species ID"/>
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding PokemonSpecies.Id}"/>
+
+                        <Label Grid.Row="1" Grid.Column="0" Text="Name"/>
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding PokemonSpecies.Name}"/>
+
+                        <Label Grid.Row="2" Grid.Column="0" Text="Is Baby"/>
+                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding PokemonSpecies.IsBaby}"/>
+
+                        <Label Grid.Row="3" Grid.Column="0" Text="Is Legendary"/>
+                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding PokemonSpecies.IsLegendary}"/>
+
+                        <Label Grid.Row="4" Grid.Column="0" Text="Is Mythical"/>
+                        <Label Grid.Row="4" Grid.Column="1" Text="{Binding PokemonSpecies.IsMythical}"/>
+
+                        <Label Grid.Row="5" Grid.Column="0" Text="Base Happiness"/>
+                        <Label Grid.Row="5" Grid.Column="1" Text="{Binding PokemonSpecies.BaseHappiness}"/>
+
+                        <Label Grid.Row="6" Grid.Column="0" Text="Capture Rate"/>
+                        <Label Grid.Row="6" Grid.Column="1" Text="{Binding PokemonSpecies.CaptureRate}"/>
+
+                        <Label Grid.Row="7" Grid.Column="0" Text="Color"/>
+                        <Label Grid.Row="7" Grid.Column="1" Text="{Binding PokemonSpecies.Color.Name}"/>
+
+                        <Label Grid.Row="8" Grid.Column="0" Text="Shape"/>
+                        <Label Grid.Row="8" Grid.Column="1" Text="{Binding PokemonSpecies.Shape.Name}"/>
+                    </Grid>
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+
 </ContentPage>

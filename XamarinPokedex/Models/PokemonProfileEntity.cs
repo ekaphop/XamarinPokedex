@@ -30,35 +30,35 @@ namespace XamarinPokedex.Models
         [JsonProperty("location_area_encounters")]
         public string LocationAreaEncounters { get; set; }
 
-        //[JsonProperty("species")]
-        //public Species Species { get; set; }
+        [JsonProperty("species")]
+        public Species Species { get; set; }
 
-        //[JsonProperty("sprites")]
-        //public Sprites Sprites { get; set; }
+        [JsonProperty("sprites")]
+        public Sprites Sprites { get; set; }
 
-        //[JsonProperty("abilities")]
-        //public List<Ability> Abilities { get; set; }
+        [JsonProperty("abilities")]
+        public Ability[] Abilities { get; set; }
 
-        //[JsonProperty("forms")]
-        //public List<Species> Forms { get; set; }
+        [JsonProperty("forms")]
+        public Species[] Forms { get; set; }
 
-        //[JsonProperty("game_indices")]
-        //public List<GameIndex> GameIndices { get; set; }
+        [JsonProperty("game_indices")]
+        public GameIndex[] GameIndices { get; set; }
 
-        //[JsonProperty("held_items")]
-        //public List<HeldItem> HeldItems { get; set; }
+        [JsonProperty("held_items")]
+        public HeldItem[] HeldItems { get; set; }
 
-        //[JsonProperty("moves")]
-        //public List<Move> Moves { get; set; }
+        [JsonProperty("moves")]
+        public Move[] Moves { get; set; }
 
-        //[JsonProperty("past_types")]
-        //public List<object> PastTypes { get; set; }
+        [JsonProperty("past_types")]
+        public object[] PastTypes { get; set; }
 
-        //[JsonProperty("stats")]
-        //public List<Stat> Stats { get; set; }
+        [JsonProperty("stats")]
+        public Stat[] Stats { get; set; }
 
-        //[JsonProperty("types")]
-        //public List<TypeElement> Types { get; set; }
+        [JsonProperty("types")]
+        public TypeElement[] Types { get; set; }
     }
 
     public class HeldItem
@@ -82,7 +82,7 @@ namespace XamarinPokedex.Models
     public class Ability
     {
         [JsonProperty("ability")]
-        public Species AbilityAbility { get; set; }
+        public Species AbilityName { get; set; }
 
         [JsonProperty("is_hidden")]
         public bool IsHidden { get; set; }
@@ -112,7 +112,7 @@ namespace XamarinPokedex.Models
     public class Move
     {
         [JsonProperty("move")]
-        public Species MoveMove { get; set; }
+        public Species MoveDetail { get; set; }
 
         [JsonProperty("version_group_details")]
         public VersionGroupDetail[] VersionGroupDetails { get; set; }
@@ -178,28 +178,28 @@ namespace XamarinPokedex.Models
     public class Sprites
     {
         [JsonProperty("back_default")]
-        public Uri BackDefault { get; set; }
+        public string BackDefault { get; set; }
 
         [JsonProperty("back_female")]
-        public object BackFemale { get; set; }
+        public string BackFemale { get; set; }
 
         [JsonProperty("back_shiny")]
-        public Uri BackShiny { get; set; }
+        public string BackShiny { get; set; }
 
         [JsonProperty("back_shiny_female")]
-        public object BackShinyFemale { get; set; }
+        public string BackShinyFemale { get; set; }
 
         [JsonProperty("front_default")]
-        public Uri FrontDefault { get; set; }
+        public string FrontDefault { get; set; }
 
         [JsonProperty("front_female")]
-        public object FrontFemale { get; set; }
+        public string FrontFemale { get; set; }
 
         [JsonProperty("front_shiny")]
-        public Uri FrontShiny { get; set; }
+        public string FrontShiny { get; set; }
 
         [JsonProperty("front_shiny_female")]
-        public object FrontShinyFemale { get; set; }
+        public string FrontShinyFemale { get; set; }
 
         [JsonProperty("other", NullValueHandling = NullValueHandling.Ignore)]
         public Other Other { get; set; }

@@ -9,7 +9,7 @@ namespace XamarinPokedex.Views
         public PokemonMainPage()
         {
             InitializeComponent();
-            BindingContext = new PokemonMainViewModel();
+            BindingContext = new PokemonMainViewModel(Navigation);
         }
 
         public void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)

@@ -52,7 +52,7 @@
                                             BackgroundColor="Wheat"
                                             HorizontalOptions="Center"
                                             VerticalOptions="Center"
-			                                AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+			                                AbsoluteLayout.LayoutBounds="0, 0, 1, 0.3"
                                             AbsoluteLayout.LayoutFlags="All">
 			                                <Label
                                                 Text="{Binding Name}"
@@ -94,7 +94,7 @@
                                             BackgroundColor="Wheat"
                                             HorizontalOptions="Center"
                                             VerticalOptions="Center"
-			                                AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+			                                AbsoluteLayout.LayoutBounds="0, 0, 1, 0.3"
                                             AbsoluteLayout.LayoutFlags="All">
 			                                <Label
                                                 Text="{Binding Name2}"
