@@ -5,13 +5,16 @@
     x:Class="XamarinPokedex.Views.PokemonProfilePage">
 
     <ContentPage.Content>
-        <ScrollView>
+        <ScrollView x:Name="ProfileScrollView">
             <Grid RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="200" />
                     <RowDefinition Height="150" />
                     <RowDefinition Height="1" />
                     <RowDefinition Height="50" />
+                    <RowDefinition Height="200" />
+                    <RowDefinition Height="11" />
+                    <RowDefinition Height="50" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="11" />
                     <RowDefinition Height="50" />
@@ -22,6 +25,8 @@
                     <RowDefinition Height="11" />
                     <RowDefinition Height="50" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="11" />
+                    
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -69,10 +74,83 @@
                     Margin="20,10,20,0"
                     FontAttributes="Bold"
                     FontSize="25"
+                    Text="Evolution Chains" />
+
+                <ScrollView 
+                    Grid.Row="4"
+                    VerticalScrollBarVisibility="Never"
+                    HorizontalScrollBarVisibility="Never" >
+
+                    <RelativeLayout HeightRequest="200">
+                        <ListView
+                            x:Name="PokemonChainListView"
+                            HasUnevenRows="True"
+                            SeparatorVisibility="None"
+                            ItemsSource="{Binding PokemonChainData}"
+                            Rotation="270"
+                            RowHeight="200"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-100}"
+                            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=100}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=200}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ContentView Rotation="90">
+                                            <AbsoluteLayout>
+                                            <Image
+                                                Aspect="Fill"
+                                                WidthRequest="200"
+                                                HeightRequest="200"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center"
+			                                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                                                AbsoluteLayout.LayoutFlags="All"
+                                                Source="{Binding Image}" />
+                                            <StackLayout
+                                                BackgroundColor="Wheat"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center"
+			                                    AbsoluteLayout.LayoutBounds="0, 0, 1, 0.3"
+                                                AbsoluteLayout.LayoutFlags="All">
+			                                    <Label
+                                                    Text="{Binding Name}"
+                                                    TextColor="#33353a"
+                                                    FontSize="20"
+                                                    FontAttributes="Bold">
+                                                     <Label.GestureRecognizers>
+                                                         <TapGestureRecognizer
+                                                            Command="{Binding Path=BindingContext.SelectChainItemCommand, Source={x:Reference PokemonChainListView}}"
+                                                            CommandParameter="{Binding .}"
+                                                        />
+                                                     </Label.GestureRecognizers>
+                                                 </Label>
+		                                    </StackLayout>
+                                    </AbsoluteLayout>
+                                        </ContentView>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </RelativeLayout>
+                </ScrollView>
+
+                <BoxView
+                    Grid.Row="5"
+                    HeightRequest="1"
+                    Margin="0,10,0,0"
+                    BackgroundColor="Red"/>
+
+                <Label
+                    Grid.Row="6"
+                    Margin="20,10,20,0"
+                    FontAttributes="Bold"
+                    FontSize="25"
                     Text="Abilities" />
 
                 <ListView
-                    Grid.Row="4"
+                    Grid.Row="7"
                     ItemsSource="{Binding PokemonProfile.Abilities}"
                     HeightRequest="{Binding AbilityListViewHeight}"
                     HasUnevenRows="True"
@@ -90,20 +168,20 @@
                 </ListView>
 
                 <BoxView
-                    Grid.Row="5"
+                    Grid.Row="8"
                     HeightRequest="1"
                     Margin="0,10,0,0"
                     BackgroundColor="Red"/>
 
                 <Label
-                    Grid.Row="6"
+                    Grid.Row="9"
                     Margin="20,10,20,0"
                     FontAttributes="Bold"
                     FontSize="25"
                     Text="Moves" />
 
                 <ListView
-                    Grid.Row="7"
+                    Grid.Row="10"
                     ItemsSource="{Binding PokemonProfile.Moves}"
                     HeightRequest="{Binding MovesListViewHeight}"
                     HasUnevenRows="True"
@@ -121,20 +199,20 @@
                 </ListView>
 
                 <BoxView
-                    Grid.Row="8"
+                    Grid.Row="11"
                     HeightRequest="1"
                     Margin="0,10,0,0"
                     BackgroundColor="Red"/>
 
                 <Label
-                    Grid.Row="9"
+                    Grid.Row="12"
                     Margin="20,10,20,0"
                     FontAttributes="Bold"
                     FontSize="25"
                     Text="Sprites" />
 
                 <ScrollView 
-                    Grid.Row="10"
+                    Grid.Row="13"
                     VerticalScrollBarVisibility="Never"
                     HorizontalScrollBarVisibility="Never" >
 
@@ -169,19 +247,19 @@
                 </ScrollView>
 
                 <BoxView
-                    Grid.Row="11"
+                    Grid.Row="14"
                     HeightRequest="1"
                     Margin="0,10,0,0"
                     BackgroundColor="Red"/>
 
                 <Label
-                    Grid.Row="12"
+                    Grid.Row="15"
                     Margin="20,10,20,0"
                     FontAttributes="Bold"
                     FontSize="25"
                     Text="Species" />
 
-                <StackLayout Grid.Row="13">
+                <StackLayout Grid.Row="16">
                     <Grid Margin="20,0,20,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -219,6 +297,14 @@
                         <Label Grid.Row="8" Grid.Column="1" Text="{Binding PokemonSpecies.Shape.Name}"/>
                     </Grid>
                 </StackLayout>
+
+                <BoxView
+                    Grid.Row="17"
+                    HeightRequest="1"
+                    Margin="0,10,0,0"
+                    BackgroundColor="Red"/>
+
+                
             </Grid>
         </ScrollView>
     </ContentPage.Content>

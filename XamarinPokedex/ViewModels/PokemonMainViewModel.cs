@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -17,6 +18,7 @@ namespace XamarinPokedex.ViewModels
         private int _limit = 40;
         private int _offsetPlus = 40;
         private string _imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{0}.png";
+        private string _pokemonUrl = "https://pokeapi.co/api/v2/pokemon/{0}/";
 
         private PokemonMainEntity _pokemonMainEntity;
 
@@ -71,7 +73,87 @@ namespace XamarinPokedex.ViewModels
         {
             var pokemonProfile = await PokeApiService.Instance.GetPokemonProfile(id);
             var pokemonSpecies = await PokeApiService.Instance.GetPokemonSpecies(id);
-            await Navigation.PushAsync(new PokemonProfilePage(pokemonProfile, pokemonSpecies));
+            var pokemonChain = await PokeApiService.Instance.GetPokemonChain(pokemonSpecies.EvolutionChain.Url);
+
+            List<ItemEntity> chainItem = new List<ItemEntity>();
+
+            if(pokemonChain != null && pokemonChain.Chain != null)
+            {
+                if (!string.IsNullOrWhiteSpace(pokemonChain.Chain.Species.Url))
+                {
+                    var entity = new ItemEntity
+                    {
+                        Name = pokemonChain.Chain.Species.Name,
+                        Id = FindIdByUrl(pokemonChain.Chain.Species.Url)
+                    };
+                    entity.Url = string.Format(_pokemonUrl, entity.Id);
+                    entity.Image = string.Format(_imageUrl, entity.Id);
+
+                    chainItem.Add(entity);
+                }
+
+                if(pokemonChain.Chain.EvolvesTo != null)
+                {
+                    var bodyGen2 = pokemonChain.Chain.EvolvesTo;
+
+                    foreach(var item2 in bodyGen2)
+                    {
+                        if(item2 != null)
+                        {
+                            if (!string.IsNullOrWhiteSpace(item2.Species.Url))
+                            {
+                                var entity = new ItemEntity
+                                {
+                                    Name = item2.Species.Name,
+                                    Id = FindIdByUrl(item2.Species.Url)
+                                };
+                                entity.Url = string.Format(_pokemonUrl, entity.Id);
+                                entity.Image = string.Format(_imageUrl, entity.Id);
+
+                                chainItem.Add(entity);
+                            }
+
+                            if(item2.EvolvesTo != null)
+                            {
+                                var bodyGen3 = item2.EvolvesTo;
+
+                                foreach (var item3 in bodyGen3)
+                                {
+                                    if (item3 != null)
+                                    {
+                                        if (!string.IsNullOrWhiteSpace(item3.Species.Url))
+                                        {
+                                            var entity = new ItemEntity
+                                            {
+                                                Name = item3.Species.Name,
+                                                Id = FindIdByUrl(item3.Species.Url)
+                                            };
+                                            entity.Url = string.Format(_pokemonUrl, entity.Id);
+                                            entity.Image = string.Format(_imageUrl, entity.Id);
+
+                                            chainItem.Add(entity);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                var entity = new ItemEntity
+                {
+                    Name = pokemonProfile.Name,
+                    Id = pokemonProfile.Id
+                };
+                entity.Url = string.Format(_pokemonUrl, entity.Id);
+                entity.Image = string.Format(_imageUrl, entity.Id);
+
+                chainItem.Add(entity);
+            }
+
+            await Navigation.PushAsync(new PokemonProfilePage(pokemonProfile, pokemonSpecies, chainItem));
         }
 
         private async void LoadData()
@@ -113,23 +195,15 @@ namespace XamarinPokedex.ViewModels
             {
                 if (_isOddItem)
                 {
-                    entity = new DoubleGridItem();
-                    entity.Name = item.Name;
-                    entity.Url = item.Url;
+                    entity = new DoubleGridItem
+                    {
+                        Name = item.Name,
+                        Url = item.Url
+                    };
 
                     if (!string.IsNullOrWhiteSpace(entity.Url))
                     {
-                        string[] words = entity.Url.Split('/');
-
-                        string idStr = "";
-
-                        foreach (var word in words)
-                        {
-                            if (!string.IsNullOrWhiteSpace(word))
-                                idStr = word;
-                        }
-
-                        entity.Id = Convert.ToInt32(idStr);
+                        entity.Id = FindIdByUrl(entity.Url);
                         entity.Image = string.Format(_imageUrl, entity.Id);
                     }
 
@@ -142,17 +216,7 @@ namespace XamarinPokedex.ViewModels
 
                     if (!string.IsNullOrWhiteSpace(entity.Url2))
                     {
-                        string[] words = entity.Url2.Split('/');
-
-                        string idStr = "";
-
-                        foreach (var word in words)
-                        {
-                            if (!string.IsNullOrWhiteSpace(word))
-                                idStr = word;
-                        }
-
-                        entity.Id2 = Convert.ToInt32(idStr);
+                        entity.Id2 = FindIdByUrl(entity.Url2);
                         entity.Image2 = string.Format(_imageUrl, entity.Id2);
                     }
 
@@ -166,6 +230,21 @@ namespace XamarinPokedex.ViewModels
             {
                 PokemonData.Add(entity);
             }
+        }
+
+        public int FindIdByUrl(string url)
+        {
+            string[] words = url.Split('/');
+
+            string idStr = "";
+
+            foreach (var word in words)
+            {
+                if (!string.IsNullOrWhiteSpace(word))
+                    idStr = word;
+            }
+
+            return Convert.ToInt32(idStr);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -99,7 +99,7 @@ namespace XamarinPokedex.Models
     public class EvolutionChain
     {
         [JsonProperty("url")]
-        public Uri Url { get; set; }
+        public string Url { get; set; }
     }
 
     public class FlavorTextEntry

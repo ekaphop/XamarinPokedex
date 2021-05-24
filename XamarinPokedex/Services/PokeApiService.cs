@@ -70,5 +70,22 @@ namespace XamarinPokedex.Services
                 }
             }
         }
+
+        public async Task<PokemonChainEntity> GetPokemonChain(string url)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    Uri uri = new Uri(url);
+                    var result = await client.GetStringAsync(uri);
+                    return JsonConvert.DeserializeObject<PokemonChainEntity>(result);
+                }
+                catch (Exception ex)
+                {
+                    return new PokemonChainEntity();
+                }
+            }
+        }
     }
 }

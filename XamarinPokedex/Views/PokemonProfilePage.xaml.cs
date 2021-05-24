@@ -9,12 +9,12 @@ namespace XamarinPokedex.Views
 {
     public partial class PokemonProfilePage : ContentPage
     {
-        PokemonProfileViewModel vm = new PokemonProfileViewModel(null,null);
-
-        public PokemonProfilePage(PokemonProfileEntity pokemonProfile, PokemonSpeciesEntity pokemonSpecies)
+        public PokemonProfilePage(PokemonProfileEntity pokemonProfile
+            , PokemonSpeciesEntity pokemonSpecies
+            , List<ItemEntity> pokemonChain)
         {
             InitializeComponent();
-            vm = new PokemonProfileViewModel(pokemonProfile, pokemonSpecies);
+            var vm = new PokemonProfileViewModel(pokemonProfile, pokemonSpecies, pokemonChain);
             BindingContext = vm;
         }
     }

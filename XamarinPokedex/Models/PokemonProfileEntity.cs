@@ -97,7 +97,7 @@ namespace XamarinPokedex.Models
         public string Name { get; set; }
 
         [JsonProperty("url")]
-        public Uri Url { get; set; }
+        public string Url { get; set; }
     }
 
     public class GameIndex
