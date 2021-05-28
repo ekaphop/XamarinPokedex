@@ -40,7 +40,7 @@ namespace XamarinPokedex.Models
         public object HeldItem { get; set; }
 
         [JsonProperty("item")]
-        public object Item { get; set; }
+        public Species Item { get; set; }
 
         [JsonProperty("known_move")]
         public object KnownMove { get; set; }
@@ -58,10 +58,10 @@ namespace XamarinPokedex.Models
         public object MinBeauty { get; set; }
 
         [JsonProperty("min_happiness")]
-        public object MinHappiness { get; set; }
+        public long? MinHappiness { get; set; }
 
         [JsonProperty("min_level")]
-        public long MinLevel { get; set; }
+        public long? MinLevel { get; set; }
 
         [JsonProperty("needs_overworld_rain")]
         public bool NeedsOverworldRain { get; set; }

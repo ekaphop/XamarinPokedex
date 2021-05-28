@@ -57,20 +57,27 @@ namespace XamarinPokedex.ViewModels
             LoadData();
         }
 
+        private bool _isSelectDoing = false;
+
         private void SelectOddItemMethod(object obj)
-        {
+        {    
             var content = obj as DoubleGridItem;
             GoToProfilePage(content.Id);
         }
 
         private void SelectEventItemMethod(object obj)
-        {
+        {  
             var content = obj as DoubleGridItem;
             GoToProfilePage(content.Id2);
         }
 
         private async void GoToProfilePage(int id)
         {
+            if (_isSelectDoing)
+                return;
+
+            _isSelectDoing = true;
+
             var pokemonProfile = await PokeApiService.Instance.GetPokemonProfile(id);
             var pokemonSpecies = await PokeApiService.Instance.GetPokemonSpecies(id);
             var pokemonChain = await PokeApiService.Instance.GetPokemonChain(pokemonSpecies.EvolutionChain.Url);
@@ -152,6 +159,8 @@ namespace XamarinPokedex.ViewModels
 
                 chainItem.Add(entity);
             }
+
+            _isSelectDoing = false;
 
             await Navigation.PushAsync(new PokemonProfilePage(pokemonProfile, pokemonSpecies, chainItem));
         }

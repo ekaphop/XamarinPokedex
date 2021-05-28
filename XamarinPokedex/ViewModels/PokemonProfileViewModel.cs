@@ -147,9 +147,15 @@ namespace XamarinPokedex.ViewModels
             }  
         }
 
+        private bool _isSelectDoing = false;
         
         private async void SelectChainItemMethod(object obj)
         {
+            if (_isSelectDoing)
+                return;
+
+            _isSelectDoing = true;
+
             var content = obj as ItemEntity;
 
             if(PokemonProfile.Id == content.Id)
@@ -235,6 +241,8 @@ namespace XamarinPokedex.ViewModels
                 PokemonChainData.Clear();
                 BindingPokemonChain();
             }
+
+            _isSelectDoing = false;
         }
 
         private void BindingPokemonChain()

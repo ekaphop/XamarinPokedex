@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using System.Globalization;
+using Xamarin.Forms;
 using XamarinPokedex.Models;
 using XamarinPokedex.ViewModels;
 
@@ -6,6 +8,8 @@ namespace XamarinPokedex.Views
 {
     public partial class PokemonMainPage : ContentPage
     {
+        private TimeSpan interval;
+
         public PokemonMainPage()
         {
             InitializeComponent();
