@@ -128,6 +128,24 @@ namespace XamarinPokedex.ViewModels
 
         public Command SelectChainItemCommand { get; }
 
+        private bool _isShowListView = true;
+        public bool IsShowListView
+        {
+            get { return _isShowListView; }
+            set { _isShowListView = value; OnPropertyChanged(nameof(IsShowListView)); }
+        }
+
+        private bool _isIndicatorRunning = false;
+        public bool IsIndicatorRunning
+        {
+            get { return _isIndicatorRunning; }
+            set
+            {
+                _isIndicatorRunning = value;
+                OnPropertyChanged(nameof(IsIndicatorRunning));
+            }
+        }
+
         public PokemonProfileViewModel(PokemonProfileEntity pokemonProfile, PokemonSpeciesEntity pokemonSpecies, List<ItemEntity> pokemonChain)
         {
             if (pokemonProfile == null)
@@ -164,82 +182,23 @@ namespace XamarinPokedex.ViewModels
             }            
             else
             {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    IsIndicatorRunning = true;
+                    IsShowListView = false;
+                });
+
                 var pokemonProfile = await PokeApiService.Instance.GetPokemonProfile(content.Id);
                 var pokemonSpecies = await PokeApiService.Instance.GetPokemonSpecies(content.Id);
-                var pokemonChain = await PokeApiService.Instance.GetPokemonChain(pokemonSpecies.EvolutionChain.Url);
-
-                List<ItemEntity> chainItem = new List<ItemEntity>();
-
-                if (pokemonChain != null && pokemonChain.Chain != null)
-                {
-                    if (!string.IsNullOrWhiteSpace(pokemonChain.Chain.Species.Url))
-                    {
-                        var entity = new ItemEntity
-                        {
-                            Name = pokemonChain.Chain.Species.Name,
-                            Id = FindIdByUrl(pokemonChain.Chain.Species.Url)
-                        };
-                        entity.Url = string.Format(_pokemonUrl, entity.Id);
-                        entity.Image = string.Format(_imageUrl, entity.Id);
-
-                        chainItem.Add(entity);
-                    }
-
-                    if (pokemonChain.Chain.EvolvesTo != null)
-                    {
-                        var bodyGen2 = pokemonChain.Chain.EvolvesTo;
-
-                        foreach (var item2 in bodyGen2)
-                        {
-                            if (item2 != null)
-                            {
-                                if (!string.IsNullOrWhiteSpace(item2.Species.Url))
-                                {
-                                    var entity = new ItemEntity
-                                    {
-                                        Name = item2.Species.Name,
-                                        Id = FindIdByUrl(item2.Species.Url)
-                                    };
-                                    entity.Url = string.Format(_pokemonUrl, entity.Id);
-                                    entity.Image = string.Format(_imageUrl, entity.Id);
-
-                                    chainItem.Add(entity);
-                                }
-
-                                if (item2.EvolvesTo != null)
-                                {
-                                    var bodyGen3 = item2.EvolvesTo;
-
-                                    foreach (var item3 in bodyGen3)
-                                    {
-                                        if (item3 != null)
-                                        {
-                                            if (!string.IsNullOrWhiteSpace(item3.Species.Url))
-                                            {
-                                                var entity = new ItemEntity
-                                                {
-                                                    Name = item3.Species.Name,
-                                                    Id = FindIdByUrl(item3.Species.Url)
-                                                };
-                                                entity.Url = string.Format(_pokemonUrl, entity.Id);
-                                                entity.Image = string.Format(_imageUrl, entity.Id);
-
-                                                chainItem.Add(entity);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
 
                 PokemonProfile = pokemonProfile;
                 PokemonSpecies = pokemonSpecies;
-                ChainSource = chainItem;
 
-                PokemonChainData.Clear();
-                BindingPokemonChain();
+                Device.BeginInvokeOnMainThread(() =>
+                { 
+                    IsIndicatorRunning = false;
+                    IsShowListView = true;
+                });
             }
 
             _isSelectDoing = false;

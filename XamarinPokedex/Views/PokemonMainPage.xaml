@@ -4,16 +4,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="XamarinPokedex.Views.PokemonMainPage">
 
-        <StackLayout>
+    <StackLayout>
+
         <Label Text="Pokemon Lists"
                HorizontalOptions="Center"/>
 
         <ListView
             x:Name="PokemonListView"
+            IsVisible="{Binding IsShowListView}"
             ItemsSource="{Binding PokemonData}"
             ItemAppearing="ListView_ItemAppearing"
             HasUnevenRows="True"
-            BackgroundColor="WhiteSmoke">
+            BackgroundColor="WhiteSmoke"
+            HorizontalScrollBarVisibility="Never"
+            VerticalScrollBarVisibility="Never"
+            >
 
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -31,7 +36,7 @@
                             <Frame
                                 Grid.Row="0"
                                 Grid.Column="0"
-                                Padding="0"
+                                Margin="5,5,5,5"
                                 HasShadow="True"
                                 IsClippedToBounds="True">
                                 <StackLayout
@@ -73,7 +78,7 @@
                             <Frame
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                Padding="0"
+                                Margin="5,5,5,5"
                                 HasShadow="True"
                                 IsClippedToBounds="True">
                                 <StackLayout
@@ -118,6 +123,15 @@
             </ListView.ItemTemplate>
 
         </ListView>
+
+
+        <ActivityIndicator
+            x:Name="WaitingSign"
+            Margin="0,10,0,0"
+            IsRunning="{Binding IsIndicatorRunning}"
+            Color="Black"
+            VerticalOptions="Center"
+            HorizontalOptions="Center" />
     </StackLayout>
 
 </ContentPage>

@@ -5,7 +5,10 @@
     x:Class="XamarinPokedex.Views.PokemonProfilePage">
 
     <ContentPage.Content>
-        <ScrollView x:Name="ProfileScrollView">
+        <ScrollView
+            x:Name="ProfileScrollView"
+            HorizontalScrollBarVisibility="Never"
+            VerticalScrollBarVisibility="Never" >
             <Grid RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="200" />
@@ -76,8 +79,18 @@
                     FontSize="25"
                     Text="Evolution Chains" />
 
+                <ActivityIndicator
+                    Grid.Row="4"
+                    x:Name="WaitingSign"
+                    Margin="0,10,0,0"
+                    IsRunning="{Binding IsIndicatorRunning}"
+                    Color="Black"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center" />
+
                 <ScrollView 
                     Grid.Row="4"
+                    IsVisible="{Binding IsShowListView}"
                     VerticalScrollBarVisibility="Never"
                     HorizontalScrollBarVisibility="Never" >
 
@@ -89,6 +102,8 @@
                             ItemsSource="{Binding PokemonChainData}"
                             Rotation="270"
                             RowHeight="200"
+                            HorizontalScrollBarVisibility="Never"
+                            VerticalScrollBarVisibility="Never"
                             RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-100}"
                             RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=100}"
                             RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=200}"
@@ -223,6 +238,8 @@
                             ItemsSource="{Binding SpritesImage}"
                             Rotation="270"
                             RowHeight="200"
+                            VerticalScrollBarVisibility="Never"
+                            HorizontalScrollBarVisibility="Never"
                             RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-100}"
                             RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=100}"
                             RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=200}"

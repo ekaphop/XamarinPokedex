@@ -45,8 +45,25 @@ namespace XamarinPokedex.ViewModels
         public Command SelectOddItemCommand { get; }
         public Command SelectEventItemCommand { get; }
 
-        public PokemonMainViewModel(INavigation navigation)
+        private bool _isShowListView = false;
+        public bool IsShowListView
         {
+            get { return _isShowListView; }
+            set { _isShowListView = value; OnPropertyChanged(nameof(IsShowListView)); }
+        }
+
+        private bool _isIndicatorRunning = true;
+        public bool IsIndicatorRunning
+        {
+            get { return _isIndicatorRunning; }
+            set {
+                _isIndicatorRunning = value;
+                OnPropertyChanged(nameof(IsIndicatorRunning));
+            }
+        }
+
+        public PokemonMainViewModel(INavigation navigation)
+        {   
             _navigation = navigation;
 
             _pokemonMainEntity = new PokemonMainEntity();
@@ -77,6 +94,12 @@ namespace XamarinPokedex.ViewModels
                 return;
 
             _isSelectDoing = true;
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                IsIndicatorRunning = true;
+                IsShowListView = false;
+            });
 
             var pokemonProfile = await PokeApiService.Instance.GetPokemonProfile(id);
             var pokemonSpecies = await PokeApiService.Instance.GetPokemonSpecies(id);
@@ -163,10 +186,22 @@ namespace XamarinPokedex.ViewModels
             _isSelectDoing = false;
 
             await Navigation.PushAsync(new PokemonProfilePage(pokemonProfile, pokemonSpecies, chainItem));
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                IsIndicatorRunning = false;
+                IsShowListView = true;
+            });
         }
 
         private async void LoadData()
         {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                IsIndicatorRunning = true;
+                IsShowListView = false;
+            });
+            
             var pokemonMainEntity = await PokeApiService.Instance.GetPokemonLists(_offset, _limit);
             _pokemonMainEntity = pokemonMainEntity;
 
@@ -174,6 +209,12 @@ namespace XamarinPokedex.ViewModels
 
             //Next of OffSet
             _offset += _offsetPlus;
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                IsIndicatorRunning = false;
+                IsShowListView = true;
+            });
         }
 
         public async void LoadMoreItems(DoubleGridItem currentItem)
@@ -184,6 +225,12 @@ namespace XamarinPokedex.ViewModels
 
             if (PokemonData.Count - 10 == itemIndex)
             {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    IsIndicatorRunning = true;
+                    IsShowListView = false;
+                });
+
                 var pokemonMainEntity = await PokeApiService.Instance.GetPokemonLists(_offset, _limit);
                 _pokemonMainEntity = new PokemonMainEntity();
                 _pokemonMainEntity = pokemonMainEntity;
@@ -192,6 +239,12 @@ namespace XamarinPokedex.ViewModels
 
                 //Next of OffSet
                 _offset += _offsetPlus;
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    IsIndicatorRunning = false;
+                    IsShowListView = true;
+                });
             }
         }
 
