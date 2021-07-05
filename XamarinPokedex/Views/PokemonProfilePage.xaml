@@ -36,12 +36,14 @@
                 </Grid.ColumnDefinitions>
                 <Image
                     Grid.Row="0"
+                    IsVisible="{Binding IsShowListView}"
                     Aspect="AspectFit"
                     WidthRequest="150"
                     HeightRequest="200"
                     Source="{Binding PokemonProfile.Sprites.FrontDefault}"
                     />
-                <StackLayout Grid.Row="1">
+                <StackLayout Grid.Row="1" IsVisible="{Binding IsShowListView}">
+
                     <Grid Margin="20,0,20,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
@@ -69,11 +71,13 @@
 
                 <BoxView
                     Grid.Row="2"
+                    IsVisible="{Binding IsShowListView}"
                     HeightRequest="1"
                     BackgroundColor="Red" />
 
                 <Label
                     Grid.Row="3"
+                    IsVisible="{Binding IsShowListView}"
                     Margin="20,10,20,0"
                     FontAttributes="Bold"
                     FontSize="25"
@@ -114,35 +118,35 @@
                                     <ViewCell>
                                         <ContentView Rotation="90">
                                             <AbsoluteLayout>
-                                            <Image
-                                                Aspect="Fill"
-                                                WidthRequest="200"
-                                                HeightRequest="200"
-                                                HorizontalOptions="Center"
-                                                VerticalOptions="Center"
-			                                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
-                                                AbsoluteLayout.LayoutFlags="All"
-                                                Source="{Binding Image}" />
-                                            <StackLayout
-                                                BackgroundColor="Wheat"
-                                                HorizontalOptions="Center"
-                                                VerticalOptions="Center"
-			                                    AbsoluteLayout.LayoutBounds="0, 0, 1, 0.3"
-                                                AbsoluteLayout.LayoutFlags="All">
-			                                    <Label
-                                                    Text="{Binding Name}"
-                                                    TextColor="#33353a"
-                                                    FontSize="20"
-                                                    FontAttributes="Bold">
-                                                     <Label.GestureRecognizers>
-                                                         <TapGestureRecognizer
-                                                            Command="{Binding Path=BindingContext.SelectChainItemCommand, Source={x:Reference PokemonChainListView}}"
-                                                            CommandParameter="{Binding .}"
-                                                        />
-                                                     </Label.GestureRecognizers>
-                                                 </Label>
-		                                    </StackLayout>
-                                    </AbsoluteLayout>
+                                                <AbsoluteLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Path=BindingContext.SelectChainItemCommand, Source={x:Reference PokemonChainListView}}"
+                                                        CommandParameter="{Binding .}"
+                                                    />
+                                                </AbsoluteLayout.GestureRecognizers>
+                                                <Image
+                                                    Aspect="Fill"
+                                                    WidthRequest="200"
+                                                    HeightRequest="200"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center"
+			                                        AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                                                    AbsoluteLayout.LayoutFlags="All"
+                                                    Source="{Binding Image}" />
+                                                <StackLayout
+                                                    BackgroundColor="Wheat"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center"
+			                                        AbsoluteLayout.LayoutBounds="0, 0, 1, 0.3"
+                                                    AbsoluteLayout.LayoutFlags="All">
+			                                        <Label
+                                                        Text="{Binding Name}"
+                                                        TextColor="#33353a"
+                                                        FontSize="20"
+                                                        FontAttributes="Bold">
+                                                    </Label>
+		                                        </StackLayout>
+                                            </AbsoluteLayout>
                                         </ContentView>
                                     </ViewCell>
                                 </DataTemplate>
@@ -153,12 +157,14 @@
 
                 <BoxView
                     Grid.Row="5"
+                    IsVisible="{Binding IsShowListView}"
                     HeightRequest="1"
                     Margin="0,10,0,0"
                     BackgroundColor="Red"/>
 
                 <Label
                     Grid.Row="6"
+                    IsVisible="{Binding IsShowListView}"
                     Margin="20,10,20,0"
                     FontAttributes="Bold"
                     FontSize="25"
@@ -166,12 +172,14 @@
 
                 <ListView
                     Grid.Row="7"
+                    IsVisible="{Binding IsShowListView}"
                     ItemsSource="{Binding PokemonProfile.Abilities}"
                     HeightRequest="{Binding AbilityListViewHeight}"
                     HasUnevenRows="True"
                     SeparatorVisibility="None"
                     VerticalScrollBarVisibility="Never"
                     HorizontalScrollBarVisibility="Never"
+                    SelectionMode="None"
                     Margin="20,00,20,0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -186,12 +194,14 @@
 
                 <BoxView
                     Grid.Row="8"
+                    IsVisible="{Binding IsShowListView}"
                     HeightRequest="1"
                     Margin="0,10,0,0"
                     BackgroundColor="Red"/>
 
                 <Label
                     Grid.Row="9"
+                    IsVisible="{Binding IsShowListView}"
                     Margin="20,10,20,0"
                     FontAttributes="Bold"
                     FontSize="25"
@@ -199,6 +209,7 @@
 
                 <ListView
                     Grid.Row="10"
+                    IsVisible="{Binding IsShowListView}"
                     ItemsSource="{Binding PokemonProfile.Moves}"
                     HeightRequest="{Binding MovesListViewHeight}"
                     HasUnevenRows="True"
@@ -219,12 +230,14 @@
 
                 <BoxView
                     Grid.Row="11"
+                    IsVisible="{Binding IsShowListView}"
                     HeightRequest="1"
                     Margin="0,10,0,0"
                     BackgroundColor="Red"/>
 
                 <Label
                     Grid.Row="12"
+                    IsVisible="{Binding IsShowListView}"
                     Margin="20,10,20,0"
                     FontAttributes="Bold"
                     FontSize="25"
@@ -232,6 +245,7 @@
 
                 <ScrollView 
                     Grid.Row="13"
+                    IsVisible="{Binding IsShowListView}"
                     VerticalScrollBarVisibility="Never"
                     HorizontalScrollBarVisibility="Never" >
 
@@ -269,18 +283,21 @@
 
                 <BoxView
                     Grid.Row="14"
+                    IsVisible="{Binding IsShowListView}"
                     HeightRequest="1"
                     Margin="0,10,0,0"
                     BackgroundColor="Red"/>
 
                 <Label
                     Grid.Row="15"
+                    IsVisible="{Binding IsShowListView}"
                     Margin="20,10,20,0"
                     FontAttributes="Bold"
                     FontSize="25"
                     Text="Species" />
 
-                <StackLayout Grid.Row="16">
+                <StackLayout Grid.Row="16" IsVisible="{Binding IsShowListView}">
+
                     <Grid Margin="20,0,20,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -321,6 +338,7 @@
 
                 <BoxView
                     Grid.Row="17"
+                    IsVisible="{Binding IsShowListView}"
                     HeightRequest="1"
                     Margin="0,10,0,0"
                     BackgroundColor="Red"/>

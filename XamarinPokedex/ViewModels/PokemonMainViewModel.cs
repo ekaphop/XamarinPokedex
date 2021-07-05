@@ -15,8 +15,8 @@ namespace XamarinPokedex.ViewModels
     {
         private bool _isOddItem = true;
         private int _offset = 0;
-        private int _limit = 40;
-        private int _offsetPlus = 40;
+        private int _limit = 100;
+        private int _offsetPlus = 100;
         private string _imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{0}.png";
         private string _pokemonUrl = "https://pokeapi.co/api/v2/pokemon/{0}/";
 
@@ -221,7 +221,7 @@ namespace XamarinPokedex.ViewModels
         {
             int itemIndex = PokemonData.IndexOf(currentItem);
 
-            _offset = PokemonData.Count;
+            //_offset = PokemonData.Count;
 
             if (PokemonData.Count - 10 == itemIndex)
             {
@@ -269,6 +269,11 @@ namespace XamarinPokedex.ViewModels
                         entity.Image = string.Format(_imageUrl, entity.Id);
                     }
 
+                    if (entity.Name != null && !string.IsNullOrWhiteSpace(entity.Name))
+                        entity.FrameIsVisible = true;
+                    else
+                        entity.FrameIsVisible = false;
+
                     _isOddItem = false;
                 }
                 else
@@ -281,6 +286,11 @@ namespace XamarinPokedex.ViewModels
                         entity.Id2 = FindIdByUrl(entity.Url2);
                         entity.Image2 = string.Format(_imageUrl, entity.Id2);
                     }
+
+                    if (entity.Name2 != null && !string.IsNullOrWhiteSpace(entity.Name2))
+                        entity.Frame2IsVisible = true;
+                    else
+                        entity.Frame2IsVisible = false;
 
                     _isOddItem = true;
 

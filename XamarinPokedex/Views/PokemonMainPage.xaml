@@ -34,6 +34,7 @@
                                 <ColumnDefinition Width="0.5*" />
                             </Grid.ColumnDefinitions>
                             <Frame
+                                IsVisible="{Binding FrameIsVisible}"
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 Margin="5,5,5,5"
@@ -43,6 +44,14 @@
                                     Orientation="Horizontal"
                                     HorizontalOptions="Center"
                                     VerticalOptions="Center">
+
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Path=BindingContext.SelectOddItemCommand, Source={x:Reference PokemonListView}}"
+                                            CommandParameter="{Binding .}"
+                                        />
+                                    </StackLayout.GestureRecognizers>
+
                                     <AbsoluteLayout>
                                         <Image
                                             Aspect="Fill"
@@ -64,18 +73,13 @@
                                                 TextColor="#33353a"
                                                 FontSize="20"
                                                 FontAttributes="Bold">
-                                                 <Label.GestureRecognizers>
-                                                     <TapGestureRecognizer
-                                                        Command="{Binding Path=BindingContext.SelectOddItemCommand, Source={x:Reference PokemonListView}}"
-                                                        CommandParameter="{Binding .}"
-                                                    />
-                                                 </Label.GestureRecognizers>
                                              </Label>
 		                                </StackLayout>
                                     </AbsoluteLayout>
                                 </StackLayout>  
                             </Frame>
                             <Frame
+                                IsVisible="{Binding Frame2IsVisible}"
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 Margin="5,5,5,5"
@@ -85,6 +89,12 @@
                                     Orientation="Horizontal"
                                     HorizontalOptions="Center"
                                     VerticalOptions="Center">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Path=BindingContext.SelectEventItemCommand, Source={x:Reference PokemonListView}}"
+                                            CommandParameter="{Binding .}"
+                                        />
+                                    </StackLayout.GestureRecognizers>
                                     <AbsoluteLayout>
                                         <Image
                                             Aspect="Fill"
@@ -106,12 +116,6 @@
                                                 TextColor="#33353a"
                                                 FontSize="20"
                                                 FontAttributes="Bold">
-                                                <Label.GestureRecognizers>
-                                                    <TapGestureRecognizer
-                                                        Command="{Binding Path=BindingContext.SelectEventItemCommand, Source={x:Reference PokemonListView}}"
-                                                        CommandParameter="{Binding .}"
-                                                    />
-                                                </Label.GestureRecognizers>
                                             </Label>
 		                                </StackLayout>
                                     </AbsoluteLayout>
@@ -124,10 +128,9 @@
 
         </ListView>
 
-
         <ActivityIndicator
             x:Name="WaitingSign"
-            Margin="0,10,0,0"
+            Margin="0,0,0,0"
             IsRunning="{Binding IsIndicatorRunning}"
             Color="Black"
             VerticalOptions="Center"

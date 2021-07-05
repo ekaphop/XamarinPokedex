@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using XamarinPokedex.Models;
 using XamarinPokedex.Services;
@@ -92,8 +93,8 @@ namespace XamarinPokedex.ViewModels
                 {
                     _spritesImage = new List<string>();
 
-                    AbilityListViewHeight = PokemonProfile.Abilities.Length * 30;
-                    MovesListViewHeight = PokemonProfile.Moves.Length * 30;
+                    AbilityListViewHeight = (PokemonProfile.Abilities.Length * 30) + (PokemonProfile.Abilities.Length / 2) + 5;
+                    MovesListViewHeight = (PokemonProfile.Moves.Length * 30) + (PokemonProfile.Moves.Length/2) + 5;
 
                     if(!string.IsNullOrWhiteSpace(PokemonProfile.Sprites.BackDefault))
                         SpritesImage.Add(PokemonProfile.Sprites.BackDefault);
@@ -111,7 +112,6 @@ namespace XamarinPokedex.ViewModels
                         SpritesImage.Add(PokemonProfile.Sprites.FrontShiny);
                     if (!string.IsNullOrWhiteSpace(PokemonProfile.Sprites.FrontShinyFemale))
                         SpritesImage.Add(PokemonProfile.Sprites.FrontShinyFemale);
-
                 }
                 else
                 {
@@ -188,14 +188,17 @@ namespace XamarinPokedex.ViewModels
                     IsShowListView = false;
                 });
 
+                BindingPokemonChain();
+
                 var pokemonProfile = await PokeApiService.Instance.GetPokemonProfile(content.Id);
                 var pokemonSpecies = await PokeApiService.Instance.GetPokemonSpecies(content.Id);
 
                 PokemonProfile = pokemonProfile;
                 PokemonSpecies = pokemonSpecies;
 
-                Device.BeginInvokeOnMainThread(() =>
-                { 
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    await Task.Delay(300);
                     IsIndicatorRunning = false;
                     IsShowListView = true;
                 });
@@ -206,6 +209,8 @@ namespace XamarinPokedex.ViewModels
 
         private void BindingPokemonChain()
         {
+            PokemonChainData = new ObservableCollection<ItemEntity>();
+
             foreach (var item in ChainSource)
             {
                 PokemonChainData.Add(item);

@@ -1,8 +1,5 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 using XamarinPokedex.Views;
-using XamarinPokedex.Views.TestPage;
 
 namespace XamarinPokedex
 {
