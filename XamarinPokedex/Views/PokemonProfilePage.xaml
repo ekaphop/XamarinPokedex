@@ -170,6 +170,8 @@
                     HeightRequest="{Binding AbilityListViewHeight}"
                     HasUnevenRows="True"
                     SeparatorVisibility="None"
+                    VerticalScrollBarVisibility="Never"
+                    HorizontalScrollBarVisibility="Never"
                     Margin="20,00,20,0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -201,6 +203,8 @@
                     HeightRequest="{Binding MovesListViewHeight}"
                     HasUnevenRows="True"
                     SeparatorVisibility="None"
+                    VerticalScrollBarVisibility="Never"
+                    HorizontalScrollBarVisibility="Never"
                     Margin="20,00,20,0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
